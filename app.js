@@ -1,7 +1,10 @@
 const todosNode = document.querySelector('#jsTodos')
 const todoInputText = document.querySelector('#todoText')
 const checkBox = todosNode.getElementsByTagName('input')
+const taskSort = document.querySelector('.todo-nav')
 const childTodosNode = todosNode.childNodes;
+
+let saveScreen = null;
 
 
 
@@ -16,7 +19,7 @@ function addTodo(text) {
         done: false,
         id: `${Math.random()}`
     }
-    todos.push(todo);
+    todos.unshift(todo);
 
     render(todo);
 }
@@ -38,25 +41,43 @@ function deleteTodo(id) {
     }
 }
 
-function doneTodo(id, checked) {
+function doneTodo(id) {
     todos.forEach(todo => {
         if (todo.id === id) {
             for (const el of childTodosNode) {
                 const pTag = el.querySelector('p');
                 const idEl = el.querySelector('input').id;
                 if (idEl === id) {
-                    if (checked) {
+                    if (!todo.done) {
                         todo.done = true;
                         pTag.style.textDecoration = "line-through"
+
+
                     } else {
                         todo.done = false;
                         pTag.style.textDecoration = 'none'
                     }
-                    todosChangePosition(el);
+                    todosChangePosition(el)
+
+                    return
                 }
             }
         }
+
     })
+
+
+}
+
+
+function moveDoneArr(arr) {
+    arr.forEach(function (item, index) {
+        if (item.done === true) {
+            arr.push(item);
+            arr.splice(index, 1);
+        }
+    });
+    return arr;
 }
 
 function todosChangePosition(mainEl) {
@@ -100,7 +121,7 @@ function render(todo) {
     liTag.append(pTag);
     liTag.append(deleteBtn)
     todosNode.prepend(liTag)
-    // }
+
 
 }
 
@@ -188,7 +209,39 @@ todoInputText.addEventListener('keypress', (e) => {
 
 })
 
-console.log('Test git')
+addTodo('test')
+
+taskSort.addEventListener('click', (e) => {
+    const nameSort = e.target.innerHTML
+
+    sortingTasks(nameSort)
+
+})
+
+function sortingTasks(nameSort) {
+    console.log(nameSort)
+    todosNode.innerHTML = ""
+
+
+    for (const todo of todos) {
+        if (nameSort === 'All') {
+            render(todo)
+
+
+
+        } else if (nameSort === 'Active') {
+            if (!todo.done) console.log('active')
+
+        } else {
+            if (todo.done) console.log('compledet')
+        }
+
+    }
+
+
+}
+
+console.log('test branch')
 
 
 

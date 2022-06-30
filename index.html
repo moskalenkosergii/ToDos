@@ -17,7 +17,13 @@
             <div class="row col-10 mx-auto">
                 <h1 class="text-center">ToDos</h1>
                 <input type="text" placeholder="please enter text" id="todoText" class="mx-auto form-control">
-                <ul id="jsTodos" class="px-0 pt-4 list-group "></ul>
+                <ul class="nav nav-pills todo-nav">
+                    <li role="presentation" class="nav-item all-task active"><a href="#" class="nav-link">All</a></li>
+                    <li role="presentation" class="nav-item active-task"><a href="#" class="nav-link">Active</a></li>
+                    <li role="presentation" class="nav-item completed-task"><a href="#" class="nav-link">Completed</a>
+                    </li>
+                </ul>
+                <ul id="jsTodos" class="px-0  list-group "></ul>
 
             </div>
         </div>
